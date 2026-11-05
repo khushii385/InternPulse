@@ -1,6 +1,7 @@
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 COPY . .
+RUN sed -i -e 's/\r$//' gradlew
 RUN chmod +x gradlew
 RUN ./gradlew bootJar -x test
 EXPOSE 8080
