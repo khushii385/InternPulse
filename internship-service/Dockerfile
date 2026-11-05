@@ -1,8 +1,8 @@
 FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 COPY . .
-RUN find . -name "gradlew" -exec sed -i 's/\x0D//g' {} +
-RUN find . -name "gradlew" -exec chmod +x {} +
+RUN chmod +x gradlew
 RUN ./gradlew bootJar -x test
+RUN cp build/libs/*.jar app.jar
 EXPOSE 8080
-ENTRYPOINT ["java", "-jar", "build/libs/*.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
