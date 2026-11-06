@@ -1,6 +1,8 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:17-jdk-jammy
 WORKDIR /app
 COPY . .
-RUN ./gradlew build -x test
+RUN chmod +x gradlew
+RUN ./gradlew bootJar -x test
+RUN cp build/libs/*.jar app.jar
 EXPOSE 8080
-CMD ["java", "-jar", "build/libs/*.jar"]
+ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
